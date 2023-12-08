@@ -2,6 +2,9 @@
 DROP DATABASE IF EXISTS sqldb;
 -- 작업 데이터베이스 생성
 CREATE DATABASE sqldb;
+
+USE sqldb;
+
 -- 테이블 생성
 CREATE TABLE usertbl 
 (
@@ -23,3 +26,17 @@ CREATE TABLE usertbl
 
 DESC usertbl;
 
+CREATE TABLE buytbl 
+(
+	-- 의미 있는 데이터중 PK 로 할 적절한 컬럼이 없는 경우 일련번호로 PK 설정을 많이 한다..
+    -- 그런경우에는 값이 의미있는 B/L 데이터가 아님으로.. 자동 증가되게 설정을 많이 한다.. 
+    -- PK 설정은 컬럼을 명시하면서 직접 설정도 가능하고.. 
+	num INT AUTO_INCREMENT NOT NULL PRIMARY KEY,
+    userID CHAR(8) NOT NULL,
+    prodName CHAR(6) NOT NULL,
+    groupName CHAR(4), -- 분류... 
+    price INT NOT NULL,
+    amount SMALLINT NOT NULL,
+    -- 내 테이블의 userID 를 usertbl 의 userID 컬럼과 FK 설정을 하겠다.. 
+    FOREIGN KEY (userID) REFERENCES usertbl(userID)
+);
