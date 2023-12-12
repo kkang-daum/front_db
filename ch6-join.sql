@@ -19,4 +19,33 @@ SELECT
 FROM buytbl B
 	INNER JOIN usertbl U
 		ON B.userID = U.userID
-ORDER BY B.num
+ORDER BY B.num;
+
+-- outer join
+SELECT U.userID, U.name, B.prodName, U.addr
+FROM usertbl U
+	LEFT OUTER JOIN buytbl B
+    ON U.userId = B.userID
+ORDER BY U.userID;
+-- 위의 코드를 아래처럼 작성, 동일
+SELECT U.userID, U.name, B.prodName, U.addr
+FROM buytbl B
+	RIGHT OUTER JOIN usertbl U 
+    ON U.userId = B.userID
+ORDER BY U.userID;
+
+-- SELF JOIN
+CREATE TABLE emptbl (emp CHAR(3), manager CHAR(3), empTel char(4));
+insert into emptbl values ('나사장', NULL, '1111');
+insert into emptbl values ('나이사', '나사장', '2222');
+insert into emptbl values ('나부장', '나이사', '3333');
+insert into emptbl values ('나직원', '나부장', '4444');
+-- 나직원의 관리자 전화번호 추출.. 
+SELECT A.emp as '부하직원', B.emp as '직속상관', B.empTel as '직속상관전화번호'
+	FROM emptbl A
+		INNER JOIN emptbl B
+			ON A.manager = B.emp
+	WHERE A.emp = '나직원';
+
+
+
